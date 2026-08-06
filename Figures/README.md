@@ -1,2 +1,2 @@
 # fish-morphometry-r
-Statistical analysis of fish morphometric data using R
+This contains the main figures & plots for my undergraduate research project 
