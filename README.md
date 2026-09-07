@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/1284938931.svg)](https://doi.org/10.5281/zenodo.22644978)
 # Fish Morphometric Analysis using R
 
 This repository contains my undergraduate Zoology dissertation on the comparative morphometric analysis of *Labeo rohita* and *Catla catla* from West Bengal, India.
