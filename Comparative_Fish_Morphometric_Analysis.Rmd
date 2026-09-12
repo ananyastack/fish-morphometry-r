@@ -25,7 +25,8 @@ This study investigates the morphometric and geographic variation in two commerc
 
 # Introduction
 
-Major carps such as *L. rohita* and *C. catla* are ecologically and economically vital to West Bengal's aquaculture and fisheries sector. Morphometric variation across spatially separated populations can reveal the distinct signatures of regional stock heterogeneity and localized phenotypic variations. Mapping these specific sites provides a critical baseline for understanding stock structure, market distribution pattern & regional variations. Market sites serve as proxies for catchment-area habitat quality, since fish are typically sourced from nearby water bodies.
+Major carps such as *L. rohita* and *C. catla* are ecologically and economically vital to West Bengal's aquaculture and fisheries sector. Morphometric variation across spatially separated populations can reveal the distinct signatures of regional stock heterogeneity and localized phenotypic variations. Mapping these specific sites provides a critical baseline for understanding stock structure, market distribution pattern & regional variations, using market locations as dynamic operational proxies for regional catchment provenances. 
+
 
 **Research Objectives:**
 
