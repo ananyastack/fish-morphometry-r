@@ -1,17 +1,19 @@
 ---
 ---
-Title: "Comparative Morphometric, Physiological Analysis and GIS assisted provenance mapping of two economically major carps Labeo rohita and Catla catla of West Bengal, India"
-Author: "ANANYA SAMADDER | UID No: 22BSZ70039 | HONOURS IN ZOOLOGY"
-Date: "`20th August,2026`"
+Title: "Comparative Morphometric & Physiological Analysis of *Labeo rohita* and *Catla catla* across West Bengal Market Sites"
+Author: "ANANYA SAMADDER | UID No: 22BSZ70039 | HONOURS IN ZOOLOGY | DEPARTMENT OF BIOSCIENCES"
+date: "`13th September, 2026`"
+
 
 ```{r setup, include=FALSE}
-# This chunk hides all code and warnings from the final PDF
 knitr::opts_chunk$set(
-  echo = FALSE, 
-  warning = FALSE, 
+  echo    = FALSE,
+  warning = FALSE,
   message = FALSE,
   fig.align = "center",
-  dpi = 150
+  fig.width = 10,
+  fig.height = 6,
+  dpi     = 150
 )
 ```
 
@@ -27,14 +29,13 @@ This study investigates the morphometric and geographic variation in two commerc
 
 Major carps such as *L. rohita* and *C. catla* are ecologically and economically vital to West Bengal's aquaculture and fisheries sector. Morphometric variation across spatially separated populations can reveal the distinct signatures of regional stock heterogeneity and localized phenotypic variations. Mapping these specific sites provides a critical baseline for understanding stock structure, market distribution pattern & regional variations, using market locations as dynamic operational proxies for regional catchment provenances. 
 
-
 **Research Objectives:**
 
 1. Quantify physiological health (K) across three market sites.
 2. Determine growth patterns (allometry) using Length–Weight Relationships.
 3. Detect morphometric divergence using PCA.
 4. Validate findings using ANOVA, Tukey HSD, and Pearson correlation.
-5. Programmatically isolate localized sampling coordinate networks, preventing marker occlusion while mapping distinct geographic stock variations across commercial sites.
+
 ---
 
 # Materials & Methods
@@ -62,7 +63,7 @@ Measurements used: Total Length (TL, cm), Head Length (HL, cm), Body Depth (BD, 
 | Tukey HSD | Post-hoc pairwise comparisons |
 | Two-Way ANOVA | Site × Species interaction |
 | PCA | Multivariate morphometric divergence |
-| GIS-Mapping | Geospatial coordinate projection and market network isolation |
+
 ---
 
 # Setup & Data Loading
@@ -93,45 +94,20 @@ theme_dissertation <- function() {
       strip.text    = element_text(face = "bold")
     )
 }
-``` 
+```
 
 ```{r load-data}
-# 1. Load with 'show_col_types = FALSE' to keep the console clean
-catla_raw <- read_csv("final_catla.csv", show_col_types = FALSE)
-rohu_raw  <- read_csv("final_rohu.csv",  show_col_types = FALSE)
+catla <- read_csv("final_catla.csv") %>% mutate(Species = "Catla")
+rohu  <- read_csv("final_rohu.csv")  %>% mutate(Species = "Rohu")
 
-# 2. Combine and FORCE everything to be numeric
-# This handles cases where a "space" makes R think a number is "text"
-df <- bind_rows(
-  catla_raw %>% mutate(Species = "Catla"),
-  rohu_raw  %>% mutate(Species = "Rohu")
-) %>%
-  rename(
-    Total_Length        = TL,
-    Head_Length         = HL,
-    Body_Depth          = BD,
-    Dorsal_Fin_Length   = DFL,
-    Pectoral_Fin_Length = PFL,
-    Anal_Fin_Length     = AFL
-  ) %>%
+df <- bind_rows(catla, rohu) %>%
+  rename(Total_Length = TL, Head_Length = HL, Body_Depth = BD) %>%
   mutate(
-    # Convert to numeric just in case there's a hidden space/char
-    Weight       = as.numeric(Weight),
-    Total_Length = as.numeric(Total_Length),
-    # Morphometric Ratios
-    BD_TL  = Body_Depth          / Total_Length,
-    HL_TL  = Head_Length         / Total_Length,
-    DFL_TL = Dorsal_Fin_Length   / Total_Length,
-    PFL_TL = Pectoral_Fin_Length / Total_Length,
-    AFL_TL = Anal_Fin_Length     / Total_Length,
-    # Condition Factor
-    K       = (Weight / Total_Length^3) * 100,
     Site    = factor(Site,    levels = SITES),
     Species = factor(Species, levels = c("Rohu", "Catla"))
   )
 
-# VERIFICATION: If this doesn't say 70, the issue is the file reading step.
-cat(sprintf("FINAL DATASET COUNT: %d fish specimens loaded.\n", nrow(df)))
+cat(sprintf("Total records: %d\n", nrow(df)))
 ```
 
 ## Descriptive Statistics
@@ -217,6 +193,8 @@ ggplot(df, aes(x = Site, y = K, fill = Site)) +
 **Interpretation:** Barasat shows consistently compressed condition index (K) value fields for both target cohorts compared to the overall population mean. This confirms a distinct geographic variance in structural body shapes, demonstrating that specimens sampled from the Barasat market network exhibit a less robust mass-to-length proportion layout relative to their counterparts in Kalyani and Gayeshpur.
 ---
 
+---
+
 ## Length–Weight Relationship (LWR)
 
 The LWR follows the power equation: $W = a \cdot L^b$
@@ -295,36 +273,36 @@ ggplot(df_log, aes(x = log_TL, y = log_W)) +
 **Interpretation:** The empirical models isolate a sharp mathematical divergence in growth geometry between the two carp species. 
 
 * **Labeo rohita (Rohu):** Exhibits a severe negative allometric scaling profile ($b = 1.80$). This coefficient falls well below the standard physiological threshold ($b = 2.50$), mathematically proving a distinct structural thinning pattern where body mass accumulation fails to keep pace with linear length extensions.
-* **Catla catla (Catla):** Demonstrates high structural resilience, maintaining near-isometric growth equilibriums ($b = 2.94$). This coefficient sits securely within the normal, proportional scaling range ($2.5 \le b \le 3.5$), confirming stable and balanced physical development across all sampled commercial networks.
+* **Catla catla (Catla):** Demonstrates high structural resilience, maintaining near-isometric growth equilibriums ($b = 2.94$). This coefficient sits securely within the normal, proportional scaling range ($2.5 \le b \le 3.5$), confirming stable and balanced physical development across all sampled commercial networks
+---
+
+
 ---
 
 ## Normality & Homogeneity Tests
 
 ```{r normality-tests}
 # 1. Shapiro-Wilk Table Fix
-# We use 'na.omit(K)' to make sure the test runs even if one fish is slightly 'messy'
 df %>%
   group_by(Site) %>%
   summarise(
-    n_count   = n(), 
     Shapiro_W = round(shapiro.test(K)$statistic, 4),
     Shapiro_p = round(shapiro.test(K)$p.value,   4),
-    Normal    = ifelse(Shapiro_p > 0.05, "Yes", "No"),
+    Normal    = ifelse(shapiro.test(K)$p.value > 0.05, "Yes", "No"),
     .groups   = "drop"
   ) %>%
   kbl(caption = "Table 4. Shapiro-Wilk normality test for K by site") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
                 full_width = F, position = "center", font_size = 12) %>%
-  row_spec(0, bold = T, color = "white", background = "#4CAF50")
+  row_spec(0, bold = T, color = "white", background = "#4CAF50") # Header color matches your 'Gayeshpur' green
 
 # 2. Levene Test Table Fix
-# This checks if the variation is equal across Kalyani, Barasat, and Gayeshpur
 leveneTest(K ~ Site, data = df) %>%
   as_tibble(rownames = "Term") %>%
   kbl(caption = "Table 5. Levene's test for homogeneity of variance") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
                 full_width = F, position = "center") %>%
-  row_spec(0, bold = T, color = "white", background = "#2196F3")# Header color matches your 'Kalyani' blue
+  row_spec(0, bold = T, color = "white", background = "#2196F3") # Header color matches your 'Kalyani' blue
 ```
 
 ---
@@ -337,16 +315,10 @@ summary(aov_K)
 ```
 
 ```{r tukey-k, fig.cap="Figure 3. Tukey HSD pairwise comparisons for Condition Factor K."}
-# We ensure we are only using the fish that have a valid K and Site
-df_stats <- df %>% filter(!is.na(K) & !is.na(Site))
-
-aov_K <- aov(K ~ Site, data = df_stats)
 tukey_K <- TukeyHSD(aov_K)
+print(tukey_K)
 
-# Check count in console while knitting
-cat(sprintf("Number of fish used in Tukey: %d\n", nrow(df_stats)))
-
-# ggplot version
+# ggplot version of Tukey
 tukey_df <- as_tibble(tukey_K$Site, rownames = "Comparison") %>%
   mutate(Significant = ifelse(`p adj` < 0.05, "p < 0.05", "p ≥ 0.05"))
 
@@ -440,10 +412,11 @@ fviz_pca_var(pca_res,
   theme_dissertation()
 ```
 
-**Interpretation:** *Statistical Validation:* Shapiro-Wilk and Levene’s models confirm normal distribution and variance homogeneity ($p > 0.05$), validating data integrity for parametric diagnostics.
+**Interpretation:**  *Statistical Validation:* Shapiro-Wilk and Levene’s models confirm normal distribution and variance homogeneity ($p > 0.05$), validating data integrity for parametric diagnostics.
 *   *Variance Matrices:* ANOVA profiles reveal highly significant site-associated variations in body condition ($K$). Pairwise Tukey HSD post-hoc testing isolates a significant structural compression unique to the Barasat cohort ($p < 0.05$).
 *   *Correlation Tracking:* The Pearson heatmap demonstrates a powerful linear link between body weight and total length ($r = 0.75$), confirming stable structural model dimensions.
 *   *Multivariate PCA Ordination:* Principal Component Analysis (PCA) maps clear, non-overlapping spatial separation across commercial sites along the primary axis (PC1), driven by body-depth and head-length variable loadings. The 80% confidence ellipses mathematically prove a distinct signature of regional morphometric divergence across the tracked sites.
+
 
 ---
 
@@ -457,13 +430,13 @@ The integrated results from this study establish a coherent narrative:
 
 3. Condition Factor vs. Wet Weight: The Two-Way ANOVA results demonstrate that while raw wet body weight does not exhibit a significant isolated variance across independent geographic nodes ($p > 0.05$), the interactive species-by-site matrix highlights significant differences in relative condition profiles, confirming localized variations in mass distribution.
 
-4. Phenotypic Plasticity Matrix: Multivariate processing via Principal Component Analysis (PCA) confirms that major carp body shapes vary distinctly based on regional sourcing networks. This distinct clustering along primary morphometric components confirms a clear signature of regional phenotypic plasticity rather than uniform morphological homogeneity.
+4. Phenotypic Plasticity Matrix: Multivariate processing via Principal Component Analysis (PCA) confirms that major carp body shapes vary distinctly based on regional sourcing sites. This distinct clustering along primary morphometric components confirms a clear signature of regional phenotypic plasticity rather than uniform morphological homogeneity.
 
 ---
 
 # Conclusion
 
-> *"This biometric study confirms a clear divergence in the morphometric scaling properties and shape profiles of sympatric carp species across West Bengal commercial sites. Through multivariate analytics and length-weight modeling, we isolated distinct, site-associated variations in body proportions, providing a transparent, data-driven framework for mapping regional stock heterogeneity without descriptive bias."*
+>> *"This biometric study confirms a clear divergence in the morphometric scaling properties and shape profiles of sympatric carp species across West Bengal commercial sites. Through multivariate analytics and length-weight modeling, we isolated distinct, site-associated variations in body proportions, providing a transparent, data-driven framework for mapping regional stock heterogeneity without descriptive bias."*
 
 ---
 
@@ -472,5 +445,3 @@ The integrated results from this study establish a coherent narrative:
 ```{r session-info}
 sessionInfo()
 ```
-2026v2.txt
-Displaying 2026v2.txt.
