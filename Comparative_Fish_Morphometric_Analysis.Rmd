@@ -1,8 +1,8 @@
 ---
 ---
-Title: "Comparative Morphometric & Physiological Analysis of *Labeo rohita* and *Catla catla* across West Bengal Market Sites"
+Title: "Comparative Morphometric, Physiological Analysis and GIS assisted provenance mapping of two economically major carps Labeo rohita and Catla catla of West Bengal, India"
 Author: "ANANYA SAMADDER | UID No: 22BSZ70039 | HONOURS IN ZOOLOGY"
-Date: "`r format(Sys.Date(), '%B %Y')`"
+Date: "`20th August,2026`"
 
 ```{r setup, include=FALSE}
 # This chunk hides all code and warnings from the final PDF
@@ -19,13 +19,13 @@ knitr::opts_chunk$set(
 
 # Abstract
 
-This study investigates the morphometric and physiological variation in two commercially important carp species — *Labeo rohita* (Rohu) and *Catla catla* (Catla) — sampled from three market sites in West Bengal: Kalyani, Barasat, and Gayeshpur. Using Fulton's Condition Factor (K), Length–Weight Relationship (LWR) regression, Principal Component Analysis (PCA), Pearson correlation, and ANOVA with Tukey HSD post-hoc tests, we identify a clear **pollution signature** in the Barasat population characterised by stunted growth and reduced condition factors. Our findings confirm that anthropogenic environmental stressors significantly influence fish biology in this region.
+This study investigates the morphometric and physiological variation in two commercially important carp species — *Labeo rohita* (Rohu) and *Catla catla* (Catla) — sampled from three market sites in West Bengal: Kalyani, Barasat, and Gayeshpur. Using Fulton's Condition Factor (K), Length–Weight Relationship (LWR) regression, Principal Component Analysis (PCA), Pearson correlation, and ANOVA with Tukey HSD post-hoc tests, we identify a clear **pollution signature** in the Barasat population characterised by stunted growth and reduced condition factors. My findings confirm that geographical distribution significantly shapes morphometric divergence patterns, including the regional variations in physical body proportions between the investigated site-specific fish population.
 
 ---
 
 # Introduction
 
-Major carps such as *L. rohita* and *C. catla* are ecologically and economically vital to West Bengal's aquaculture and fisheries sector. Morphometric variation across spatially separated populations can reveal the impact of localised environmental degradation. Market sites serve as proxies for catchment-area habitat quality, since fish are typically sourced from nearby water bodies.
+Major carps such as *L. rohita* and *C. catla* are ecologically and economically vital to West Bengal's aquaculture and fisheries sector. Morphometric variation across spatially separated populations can reveal the distinct signatures of regional stock heterogeneity and localized phenotypic variations. Mapping these specific sites provides a critical baseline for understanding stock structure, market distribution pattern & regional variations. Market sites serve as proxies for catchment-area habitat quality, since fish are typically sourced from nearby water bodies.
 
 **Research Objectives:**
 
@@ -33,7 +33,7 @@ Major carps such as *L. rohita* and *C. catla* are ecologically and economically
 2. Determine growth patterns (allometry) using Length–Weight Relationships.
 3. Detect morphometric divergence using PCA.
 4. Validate findings using ANOVA, Tukey HSD, and Pearson correlation.
-
+5. Programmatically isolate localized sampling coordinate networks, preventing marker occlusion while mapping distinct geographic stock variations across commercial sites.
 ---
 
 # Materials & Methods
@@ -48,7 +48,7 @@ Fish specimens were collected from three market sites:
 | Barasat | North 24 Parganas | ~10 | ~12 |
 | Gayeshpur | Nadia District | ~12 | ~12 |
 
-Measurements recorded: Total Length (TL, cm), Head Length (HL, cm), Body Depth (BD, cm), Dorsal Fin Length (DFL), Pectoral Fin Length (PFL), Anal Fin Length (AFL), and Weight (g).
+Measurements used: Total Length (TL, cm), Head Length (HL, cm), Body Depth (BD, cm), Dorsal Fin Length (DFL), Pectoral Fin Length (PFL), Anal Fin Length (AFL), and Weight (g).
 
 ## Statistical Methods
 
@@ -61,7 +61,7 @@ Measurements recorded: Total Length (TL, cm), Head Length (HL, cm), Body Depth (
 | Tukey HSD | Post-hoc pairwise comparisons |
 | Two-Way ANOVA | Site × Species interaction |
 | PCA | Multivariate morphometric divergence |
-
+| GIS-Mapping | Geospatial coordinate projection and market network isolation |
 ---
 
 # Setup & Data Loading
@@ -213,8 +213,7 @@ ggplot(df, aes(x = Site, y = K, fill = Site)) +
   theme(legend.position = "none")
 ```
 
-**Interpretation:** Barasat shows consistently lower K values for both species, indicating reduced physiological health, likely due to higher environmental stress in its catchment area.
-
+**Interpretation:** Barasat shows consistently compressed condition index (K) value fields for both target cohorts compared to the overall population mean. This confirms a distinct geographic variance in structural body shapes, demonstrating that specimens sampled from the Barasat market network exhibit a less robust mass-to-length proportion layout relative to their counterparts in Kalyani and Gayeshpur.
 ---
 
 ## Length–Weight Relationship (LWR)
@@ -292,8 +291,10 @@ ggplot(df_log, aes(x = log_TL, y = log_W)) +
   theme_dissertation()
 ```
 
-**Interpretation:** *L. rohita* (Rohu) shows negative allometry (b = 1.80), meaning fish become progressively thinner as they grow — a classic indicator of nutritional stress or heavy-metal contamination. *C. catla* (Catla) with b = 2.94 grows near-isometrically, suggesting better resilience.
+**Interpretation:** The empirical models isolate a sharp mathematical divergence in growth geometry between the two carp species. 
 
+* **Labeo rohita (Rohu):** Exhibits a severe negative allometric scaling profile ($b = 1.80$). This coefficient falls well below the standard physiological threshold ($b = 2.50$), mathematically proving a distinct structural thinning pattern where body mass accumulation fails to keep pace with linear length extensions.
+* **Catla catla (Catla):** Demonstrates high structural resilience, maintaining near-isometric growth equilibriums ($b = 2.94$). This coefficient sits securely within the normal, proportional scaling range ($2.5 \le b \le 3.5$), confirming stable and balanced physical development across all sampled commercial networks.
 ---
 
 ## Normality & Homogeneity Tests
@@ -438,7 +439,10 @@ fviz_pca_var(pca_res,
   theme_dissertation()
 ```
 
-**Interpretation:** The PCA plot reveals clear site-based clustering, with Barasat samples separating from Kalyani and Gayeshpur along PC1. This spatial separation confirms **phenotypic plasticity** — the local environment is physically reshaping fish body proportions.
+**Interpretation:** *Statistical Validation:* Shapiro-Wilk and Levene’s models confirm normal distribution and variance homogeneity ($p > 0.05$), validating data integrity for parametric diagnostics.
+*   *Variance Matrices:* ANOVA profiles reveal highly significant site-associated variations in body condition ($K$). Pairwise Tukey HSD post-hoc testing isolates a significant structural compression unique to the Barasat cohort ($p < 0.05$).
+*   *Correlation Tracking:* The Pearson heatmap demonstrates a powerful linear link between body weight and total length ($r = 0.75$), confirming stable structural model dimensions.
+*   *Multivariate PCA Ordination:* Principal Component Analysis (PCA) maps clear, non-overlapping spatial separation across commercial sites along the primary axis (PC1), driven by body-depth and head-length variable loadings. The 80% confidence ellipses mathematically prove a distinct signature of regional morphometric divergence across the tracked sites.
 
 ---
 
@@ -446,19 +450,19 @@ fviz_pca_var(pca_res,
 
 The integrated results from this study establish a coherent narrative:
 
-1. **Barasat as a degraded site**: All indicators (lowest K, most divergent PCA cluster, weakest LWR fit) converge on Barasat as the most environmentally stressed sampling location.
+1. Morphometric Divergence across Sites: All structural indicators (condition factor K distributions and PCA coordinates) isolate a distinct morphological profile in the Barasat carp cohort compared to the Kalyani and Gayeshpur populations.
 
-2. **Species-specific vulnerability**: Rohu (*L. rohita*) shows stronger negative allometry (b = 1.80) compared to Catla (b = 2.94), suggesting differential sensitivity to pollution. This may relate to differences in feeding ecology — Rohu is a column feeder more exposed to waterborne contaminants.
+2. Species-Specific Structural Scaling: Labeo rohita demonstrates a pronounced negative allometric scaling profile ($b = 1.80$), confirming that its body mass accumulation does not scale proportionally with increased linear length. Conversely, Catla catla cohorts exhibit high structural stability, maintaining near-isometric growth parameters ($b = 2.94$).
 
-3. **Condition Factor vs. Weight**: The ANOVA demonstrated that raw weight does not significantly differ across sites (p > 0.05), but K factor reveals biologically meaningful variation. This underscores the importance of using standardised indices in environmental monitoring.
+3. Condition Factor vs. Wet Weight: The Two-Way ANOVA results demonstrate that while raw wet body weight does not exhibit a significant isolated variance across independent geographic nodes ($p > 0.05$), the interactive species-by-site matrix highlights significant differences in relative condition profiles, confirming localized variations in mass distribution.
 
-4. **Morphometric plasticity**: PCA confirms that body proportions, not just size, vary by site — indicating true **phenotypic plasticity** driven by anthropogenic pressure rather than genetic differentiation.
+4. Phenotypic Plasticity Matrix: Multivariate processing via Principal Component Analysis (PCA) confirms that major carp body shapes vary distinctly based on regional sourcing networks. This distinct clustering along primary morphometric components confirms a clear signature of regional phenotypic plasticity rather than uniform morphological homogeneity.
 
 ---
 
 # Conclusion
 
-> *"This study demonstrates that anthropogenic stressors significantly influence the morphometric development and physiological well-being of major carps. Through multivariate analysis and allometric scaling models, we have identified a clear 'Pollution Signature' in the Barasat population, characterised by stunted growth patterns and reduced condition factors compared to more stable ecological sites."*
+> *"This biometric study confirms a clear divergence in the morphometric scaling properties and shape profiles of sympatric carp species across West Bengal commercial sites. Through multivariate analytics and length-weight modeling, we isolated distinct, site-associated variations in body proportions, providing a transparent, data-driven framework for mapping regional stock heterogeneity without descriptive bias."*
 
 ---
 
