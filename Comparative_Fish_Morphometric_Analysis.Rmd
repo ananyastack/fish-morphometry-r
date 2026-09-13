@@ -433,7 +433,7 @@ The integrated results from this study establish a narrative:
 
 1. Primary influence of species identity: The two-way ANOVA revealed a significant species effect on $K$ ($p = 0.000454$), whereas neither site ($p = 0.758$) nor the site $\times$ species interaction ($p = 0.859$) showed significance, indicating that species identity is the principal source of variance.
 
-2. Species-specific allometry: Rohu displays negative allometric growth ($b = 1.9450$), whereas Catla demonstrates near-isometric development ($b = 2.6853$), representing an inherent species-level differences.
+2. Species-specific allometry: Rohu displays negative allometric growth ($b = 1.9450$), whereas Catla demonstrates near-isometric development ($b = 2.6853$), representing an inherent species-level difference.
 
 3. Condition factor sensitivity: Fulton’s $K$ provides a standardized metric that accounts for length-weight relationships, allowing for consistent physiological condition assessment across individuals.
 
