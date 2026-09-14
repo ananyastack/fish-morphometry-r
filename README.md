@@ -1,6 +1,6 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22743072.svg)](https://doi.org/10.5281/zenodo.22743072)
 
-> ⚠️ **Notice:** Zenodo is currently experiencing an outage. The files under the Zenodo DOI link contain errors. Please use the corrected files directly in the repository or check the GitHub page for the updated version until Zenodo is back online.
+> ⚠️ **Notice:** Zenodo is currently experiencing an outage. Please use the final files directly in the repository or check the GitHub page for the final version until Zenodo is back online.
 > 
 # Fish Morphometric Analysis using R
 
