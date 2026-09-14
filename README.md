@@ -1,4 +1,7 @@
 [![DOI](https://zenodo.org/badge/1284938931.svg)](https://doi.org/10.5281/zenodo.22644978)
+
+> ⚠️ **Notice:** Zenodo is currently experiencing an outage. The files under the Zenodo DOI link contain errors. Please use the corrected files directly in the repository or check the GitHub page for the updated version until Zenodo is back online.
+> 
 # Fish Morphometric Analysis using R
 
 This repository contains data, scripts, and documentation for my graduation thesis on the comparative morphometric and physiological analysis of two commercially important carps, *Labeo rohita* and *Catla catla*, sampled across market sites in West Bengal, India, featuring GIS-assisted mapping of sampling locations.
