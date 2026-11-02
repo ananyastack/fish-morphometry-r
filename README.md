@@ -9,6 +9,13 @@ Or check out the Video Walkthrough.
 
 > Watch the full workflow walkthrough on [YouTube](https://youtu.be/4dE7C0RPLeY) covering Length–Weight relationships ($b$), two-way ANOVA, PCA dimension reduction, and GIS provenance mapping for 70 carp specimens across the market sites in West Bengal, India .
 
+> ## Acknowledgements
+
+* **Lead Researcher**: Ananya Samadder – project conceptualization, specimen collection, morphometric measurements, statistical architecture, and R/Python analysis.
+* **Academic Guidance**: Dr. Ritu Sharma (Supervisor, Chandigarh University) and Dr. Subhendu Datta (Field Advisor, BCKV).
+* **Technical Support**: Special thanks to Mr. Nik Završnik for assistance with code debugging, computational logic review, and technical support during the development of the analytical pipelines.
+
+
 # Fish Morphometric Analysis using R
 
 This repository contains data, scripts, and documentation for my graduation thesis on the comparative morphometric and physiological analysis of two commercially important carps, *Labeo rohita* and *Catla catla*, sampled across market sites in West Bengal, India, featuring GIS-assisted mapping of sampling locations.
