@@ -1,7 +1,14 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22743072.svg)](https://doi.org/10.5281/zenodo.22743072)
 
-> ⚠️ **Notice:** Zenodo is currently experiencing an outage. Please use the final files directly in the repository or check the GitHub page for the final version until Zenodo is back online.
-> 
+> ⚠️ **Notice:** Zenodo often experiences technical outrages. Please use the final files directly in the repository or check the GitHub page for the final version until Zenodo is back online.
+Or check out the Video Walkthrough.
+
+> ### Video Walkthrough 
+
+[![Fish Morphometrics Analysis Walkthrough](https://img.youtube.com/vi/4dE7C0RPLeY/maxresdefault.jpg)](https://youtu.be/4dE7C0RPLeY)
+
+> Watch the full workflow walkthrough on [YouTube](https://youtu.be/4dE7C0RPLeY) covering Length–Weight relationships ($b$), two-way ANOVA, PCA dimension reduction, and GIS provenance mapping for 70 carp specimens across the market sites in West Bengal, India .
+
 # Fish Morphometric Analysis using R
 
 This repository contains data, scripts, and documentation for my graduation thesis on the comparative morphometric and physiological analysis of two commercially important carps, *Labeo rohita* and *Catla catla*, sampled across market sites in West Bengal, India, featuring GIS-assisted mapping of sampling locations.
